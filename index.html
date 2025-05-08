@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Temperatura a Barra</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f3f3f3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+    }
+
+    input[type="number"] {
+      padding: 10px;
+      font-size: 16px;
+      width: 150px;
+      margin-bottom: 20px;
+    }
+
+    .barra-container {
+      width: 300px;
+      height: 30px;
+      background: #ccc;
+      border-radius: 5px;
+      overflow: hidden;
+      margin-bottom: 15px;
+    }
+
+    .barra {
+      height: 100%;
+      width: 0%;
+      transition: width 0.4s ease, background-color 0.4s ease;
+    }
+
+    .resultado {
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Conversor de Temperatura 🌡️</h1>
+  <input type="number" id="tempInput" placeholder="Introduce °C" />
+  <div class="barra-container">
+    <div id="barra" class="barra"></div>
+  </div>
+  <div id="resultado" class="resultado"></div>
+
+  <script>
+    const input = document.getElementById("tempInput");
+    const barra = document.getElementById("barra");
+    const resultado = document.getElementById("resultado");
+
+    input.addEventListener("input", () => {
+      let temp = parseFloat(input.value);
+      if (isNaN(temp)) {
+        barra.style.width = "0%";
+        barra.style.backgroundColor = "#ccc";
+        resultado.textContent = "";
+        return;
+      }
+
+      let porcentaje = Math.max(0, Math.min(100, ((temp + 50) / 100) * 100));
+      barra.style.width = porcentaje + "%";
+      
+      if (temp < 10) {
+        barra.style.backgroundColor = "blue";
+      } else if (temp <= 25) {
+        barra.style.backgroundColor = "green";
+      } else {
+        barra.style.backgroundColor = "red";
+      }
+
+      resultado.textContent = `Temperatura: ${temp.toFixed(1)} °C`;
+    });
+  </script>
+</body>
+</html>
